@@ -10,7 +10,7 @@ import java.util.Map;
 public class MRTransformer extends BodyTransformer {
     private LogWriter logWriter;
     private ArrayList<MRVisitorData> visitor_data;
-    public MRTransformer() {
+    MRTransformer() {
         this.logWriter = new LogWriter(this.getClass().getSimpleName(), AnalysisConstants.DEBUG);
         this.visitor_data = new ArrayList<>();
     }
@@ -91,6 +91,11 @@ public class MRTransformer extends BodyTransformer {
                     print_ops(op1, op2);
                 } else if(rop instanceof JStaticInvokeExpr) {
                     logWriter.write_out("JStaticInvokeExpr: " + rop.toString());
+                    JStaticInvokeExpr staticInvokeExpr = (JStaticInvokeExpr)rop;
+                    SootMethod sm = staticInvokeExpr.getMethod();
+                    if(sm.getDeclaringClass().getName().equals(AnalysisConstants.MATH_LIB)) {
+                        logWriter.write_out("Found Math Call: " + sm.getName());
+                    }
                 } else if(rop instanceof JVirtualInvokeExpr) {
                     logWriter.write_out("JVirtualInvokeExpr: " + rop.toString());
                 } else {

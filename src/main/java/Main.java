@@ -18,7 +18,7 @@ public class Main {
         Options.v().set_whole_program(true);
         Options.v().set_verbose(true);
 
-        Options.v().set_exclude(AnalysisConstants.EXCLUDES);
+        // Options.v().set_exclude(AnalysisConstants.EXCLUDES);
 
         MRTransformer transformer = new MRTransformer();
 
