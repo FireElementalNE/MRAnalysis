@@ -26,3 +26,4 @@ sootOutput/*
 Programs/*
 .idea/*
 *.iml
+/src/main/java/SecretConstants.java
