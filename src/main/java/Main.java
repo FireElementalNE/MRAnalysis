@@ -1,21 +1,77 @@
 import soot.*;
+import soot.jimple.AssignStmt;
+import soot.jimple.internal.*;
 import soot.options.Options;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Main {
+    private static LogWriter logWriter = new LogWriter(Main.class.getSimpleName(), AnalysisConstants.DEBUG);
+
+    private static void write_transforms(String benchmark, String problem, MRTransformer transformer) {
+        String filename = String.format("%s_%s.log", benchmark, problem);
+        Path path = Paths.get(filename);
+        try {
+            BufferedWriter writer = Files.newBufferedWriter(path);
+            ArrayList<MRVisitorData> vdata_lst = transformer.get_visitor_data();
+
+            for (MRVisitorData vdata : vdata_lst) {
+                writer.write("Method: " + vdata.get_method().getName());
+                ArrayList<AssignStmt> tmp = vdata.get_assignments();
+                for (AssignStmt stmt : tmp) {
+                    Value rop = stmt.getRightOp();
+                    Value lop = stmt.getLeftOp(); // ???
+                    String msg;
+                    if (rop instanceof JAddExpr) {
+                        msg = "JAddExpr: " + rop.toString();
+                    } else if (rop instanceof JSubExpr) {
+                        msg = "JSubExpr: " + rop.toString();
+                    } else if (rop instanceof JMulExpr) {
+                        msg = "JMulExpr: " + rop.toString();
+                    } else if (rop instanceof JDivExpr) {
+                        msg = "JDivExpr: " + rop.toString();
+                    } else if (rop instanceof JNeExpr) {
+                        msg = "JNeExpr: " + rop.toString();
+                    } else if (rop instanceof JEqExpr) {
+                        msg = "JEqExpr: " + rop.toString();
+                    } else if (rop instanceof JGeExpr) {
+                        msg = "JGeExpr: " + rop.toString();
+                    } else if (rop instanceof JGtExpr) {
+                        msg = "JGtExpr: " + rop.toString();
+                    } else if (rop instanceof JLeExpr) {
+                        msg = "JLeExpr: " + rop.toString();
+                    } else if (rop instanceof JLtExpr) {
+                        msg = "JLtExpr: " + rop.toString();
+                    } else if (rop instanceof JStaticInvokeExpr) {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("JStaticInvokeExpr: ").append(rop.toString());
+                        JStaticInvokeExpr staticInvokeExpr = (JStaticInvokeExpr) rop;
+                        SootMethod sm = staticInvokeExpr.getMethod();
+                        if (sm.getDeclaringClass().getName().equals(AnalysisConstants.MATH_LIB)) {
+                            sb.append(" -----> ").append("Found Math Call: ").append(sm.getName());
+                        }
+                        msg = sb.toString();
+                    } else if (rop instanceof JVirtualInvokeExpr) {
+                        msg = "JVirtualInvokeExpr: " + rop.toString();
+                    } else {
+                        msg = "Unknown: " + rop.toString();
+                    }
+                    writer.write(msg + "\n");
+                }
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
-        LogWriter logWriter = new LogWriter(Main.class.getSimpleName(), AnalysisConstants.DEBUG);
         long startTime = System.currentTimeMillis();
-
-        // Code hooks the RTAAnalysis then launches Soot, which traverses
-        // all classes and creates and stores the appropriate constraints.
-
-        Options.v().set_output_format(Options.output_format_jimple);
-        Options.v().set_allow_phantom_refs(true);
-        Options.v().set_ignore_resolution_errors(true);
-        Options.v().set_whole_program(true);
-        Options.v().set_verbose(true);
 
         // Options.v().set_exclude(AnalysisConstants.EXCLUDES);
 
@@ -23,24 +79,31 @@ public class Main {
 
         ArrayList<Benchmark> benchmarks = AnalysisUtils.get_benchmark_table();
 
-        MRTransformer transformer = new MRTransformer();
-        PackManager.v().getPack("jtp").add(new Transform("jtp.transformer", transformer));
-
         for(Benchmark b : benchmarks) {
             logWriter.write_out("Starting benchmark suite " + b.get_name());
-            transformer.reset_transformer();
             String[] program_lst = b.get_programs();
             String[] new_args = new String[args.length + 2];
-            for(int j = 0; j < args.length; j++) {
-                new_args[j] = args[j];
-            }
+            System.arraycopy(args, 0, new_args, 0, args.length);
             new_args[args.length] = String.format(base_cp, b.get_dir());
-            // TODO: loop through programs instead of statically calling the first one.
-            new_args[args.length + 1] = program_lst[0];
-            // TODO: fix timer nonsense, internal timers have already been started and need to be reset on each run.
-            soot.Main.main(new_args);
-            transformer.print_possible_transforms();
-            // Timers.v().totalTimer.end(); // NOPE
+            for (String program : program_lst) {
+                logWriter.write_out("Starting " + program + " in suite " + b.get_name());
+                new_args[args.length + 1] = program;
+                // soot settings.
+                Options.v().set_output_format(Options.output_format_jimple);
+                Options.v().set_allow_phantom_refs(true);
+                Options.v().set_ignore_resolution_errors(true);
+                Options.v().set_whole_program(true);
+                Options.v().set_verbose(true);
+                MRTransformer transformer = new MRTransformer();
+                PackManager.v().getPack("jtp").add(new Transform("jtp.transformer", transformer));
+                soot.Main.main(new_args);
+                write_transforms(b.get_name(), program, transformer);
+                logWriter.write_out("Finished " + program + " in suite " + b.get_name());
+                // static soot reset
+                G.v();
+                G.reset();
+            }
+            logWriter.write_out("Finished benchmark suite " + b.get_name());
         }
         String outputDir = SourceLocator.v().getOutputDir();
         long endTime   = System.currentTimeMillis();

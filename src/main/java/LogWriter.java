@@ -4,7 +4,7 @@ import java.util.Date;
 class LogWriter {
     private String class_name;
     private boolean debug;
-    private String ip_msg_format = "<%s> %s";
+
     /**
      * create a data stamped string for the message
      * @param msg the message
@@ -20,6 +20,7 @@ class LogWriter {
     }
 
     private String make_ip_msg(String ip, String msg) {
+        String ip_msg_format = "<%s> %s";
         return String.format(ip_msg_format, ip, msg);
     }
 
@@ -56,7 +57,7 @@ class LogWriter {
     }
 
     /**
-     * write a msg to stdout
+     * write a msg to stdout or file
      * @param msg the message
      */
     void write_out(String msg) {
