@@ -4,10 +4,10 @@ class Benchmark {
     private String dir;
     private String[] programs;
 
-    Benchmark(String name, String[] programs) {
+    Benchmark(String name, String dir, String[] programs) {
         this.programs = programs;
         this.name = name;
-        this.dir = String.format(SecretConstants.PROGRAM_DIR, name);
+        this.dir = dir;
     }
 
     String[] get_programs() {

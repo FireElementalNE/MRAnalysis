@@ -21,17 +21,17 @@ class AnalysisConstants {
             "WordCount"
     };
     static final String[] BROWN_CLASSES = new String[] {
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark1",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark2",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3A",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark4",
-            "brown.edu.brown.cs.mapreduce.benchmarks.CompositeKey",
-            "brown.edu.brown.cs.mapreduce.benchmarks.DummyJob",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Grep",
-            "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark2",
-            "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark3",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Sort"
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark1",
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark2",
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark3",
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark3A",
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark4",
+            "edu.brown.cs.mapreduce.benchmarks.CompositeKey",
+            "edu.brown.cs.mapreduce.benchmarks.DummyJob",
+            "edu.brown.cs.mapreduce.benchmarks.Grep",
+            "edu.brown.cs.mapreduce.benchmarks.OrBenchmark2",
+            "edu.brown.cs.mapreduce.benchmarks.OrBenchmark3",
+            "edu.brown.cs.mapreduce.benchmarks.Sort"
     };
     static final String[] PIGMIX2_CLASSES = new String[] {
             "L1",
@@ -55,9 +55,14 @@ class AnalysisConstants {
     };
 
     static final String RT_DIR = SecretConstants.RT_DIR;
+    static final String PUMA_DIR = String.format(SecretConstants.PROGRAM_DIR, "puma");
+    static final String BROWN_DIR = String.format(SecretConstants.PROGRAM_DIR, "brown");
+    static final String PIGMIX2_DIR = String.format(SecretConstants.PROGRAM_DIR, "pigmix2");
 
     static final ArrayList<String> EXCLUDES = new ArrayList<>(Arrays.asList(EXCLUDES_INTERNAL));
     static final String MATH_LIB = "java.lang.Math";
 
+    static final String ASSIGNMENTS_HEADER = "\tAssignments\n\t-------------------------------------------------\n";
+    static final String IFSTMTS_HEADER = "\tIf Statements\n\t-------------------------------------------------\n";
 
 }

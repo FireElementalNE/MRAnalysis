@@ -1,6 +1,9 @@
-import soot.*;
+import soot.G;
+import soot.PackManager;
+import soot.SourceLocator;
+import soot.Transform;
 import soot.jimple.AssignStmt;
-import soot.jimple.internal.*;
+import soot.jimple.IfStmt;
 import soot.options.Options;
 
 import java.io.BufferedWriter;
@@ -18,50 +21,19 @@ public class Main {
         Path path = Paths.get(filename);
         try {
             BufferedWriter writer = Files.newBufferedWriter(path);
-            ArrayList<MRVisitorData> vdata_lst = transformer.get_visitor_data();
 
+            ArrayList<MRVisitorData> vdata_lst = transformer.get_visitor_data();
             for (MRVisitorData vdata : vdata_lst) {
-                writer.write("Method: " + vdata.get_method().getName());
-                ArrayList<AssignStmt> tmp = vdata.get_assignments();
-                for (AssignStmt stmt : tmp) {
-                    Value rop = stmt.getRightOp();
-                    Value lop = stmt.getLeftOp(); // ???
-                    String msg;
-                    if (rop instanceof JAddExpr) {
-                        msg = "JAddExpr: " + rop.toString();
-                    } else if (rop instanceof JSubExpr) {
-                        msg = "JSubExpr: " + rop.toString();
-                    } else if (rop instanceof JMulExpr) {
-                        msg = "JMulExpr: " + rop.toString();
-                    } else if (rop instanceof JDivExpr) {
-                        msg = "JDivExpr: " + rop.toString();
-                    } else if (rop instanceof JNeExpr) {
-                        msg = "JNeExpr: " + rop.toString();
-                    } else if (rop instanceof JEqExpr) {
-                        msg = "JEqExpr: " + rop.toString();
-                    } else if (rop instanceof JGeExpr) {
-                        msg = "JGeExpr: " + rop.toString();
-                    } else if (rop instanceof JGtExpr) {
-                        msg = "JGtExpr: " + rop.toString();
-                    } else if (rop instanceof JLeExpr) {
-                        msg = "JLeExpr: " + rop.toString();
-                    } else if (rop instanceof JLtExpr) {
-                        msg = "JLtExpr: " + rop.toString();
-                    } else if (rop instanceof JStaticInvokeExpr) {
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("JStaticInvokeExpr: ").append(rop.toString());
-                        JStaticInvokeExpr staticInvokeExpr = (JStaticInvokeExpr) rop;
-                        SootMethod sm = staticInvokeExpr.getMethod();
-                        if (sm.getDeclaringClass().getName().equals(AnalysisConstants.MATH_LIB)) {
-                            sb.append(" -----> ").append("Found Math Call: ").append(sm.getName());
-                        }
-                        msg = sb.toString();
-                    } else if (rop instanceof JVirtualInvokeExpr) {
-                        msg = "JVirtualInvokeExpr: " + rop.toString();
-                    } else {
-                        msg = "Unknown: " + rop.toString();
-                    }
-                    writer.write(msg + "\n");
+                writer.write("Method: " + vdata.get_method().getName() + "\n");
+                ArrayList<AssignStmt> assignments = vdata.get_assignments();
+                ArrayList<IfStmt> ifstmts = vdata.get_ifstmts();
+                writer.write(AnalysisConstants.ASSIGNMENTS_HEADER);
+                for (AssignStmt stmt : assignments) {
+                    writer.write("\t\t"+ AnalysisUtils.parse_assignment(stmt) + "\n");
+                }
+                writer.write(AnalysisConstants.IFSTMTS_HEADER);
+                for (IfStmt stmt : ifstmts) {
+                    writer.write("\t\t"+ AnalysisUtils.parse_ifstmt(stmt) + "\n");
                 }
             }
             writer.close();
