@@ -1,5 +1,6 @@
 import soot.SootMethod;
 import soot.jimple.AssignStmt;
+import soot.jimple.GotoStmt;
 import soot.jimple.IfStmt;
 
 import java.util.ArrayList;

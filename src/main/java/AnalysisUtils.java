@@ -15,6 +15,7 @@ class AnalysisUtils {
         lst.add(new Benchmark("puma", AnalysisConstants.PUMA_DIR, AnalysisConstants.PUMA_CLASSES));
         lst.add(new Benchmark("brown", AnalysisConstants.BROWN_DIR, AnalysisConstants.BROWN_CLASSES));
         lst.add(new Benchmark("pigmix2", AnalysisConstants.PIGMIX2_DIR, AnalysisConstants.PIGMIX2_CLASSES));
+        lst.add(new Benchmark("pegasus", AnalysisConstants.PEGASUS_DIR, AnalysisConstants.PEGASUS_CLASSES));
         return lst;
     }
 

@@ -9,7 +9,8 @@ brown.sort()
 pigmix2 = [el for el in os.listdir('./programs/pigmix2') if '$' not in el and 'META' not in el]
 pigmix2.sort()
 
-
+pegasus = [el for el in os.listdir('./programs/pegasus') if '$' not in el and 'META' not in el]
+pegasus.sort()
 
 
 fh = open('things.java', 'w+')
@@ -44,5 +45,18 @@ for el in pigmix2:
     else:
         fh.write(',\n')
 fh.write('    };\n')
+
+base_pegasus = 'pegasus.{}'
+fh.write('    static final String[] PEGASUS_CLASSES = new String[] {\n')
+for el in pegasus:
+    pegasus_name = base_pegasus.format(el.split('.class')[0])
+    fh.write('            \"{}\"'.format(pegasus_name))
+    if pegasus.index(el) == len(pegasus) - 1:
+        fh.write('\n')
+    else:
+        fh.write(',\n')
+fh.write('    };\n')
+
 fh.close()
+
 

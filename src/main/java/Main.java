@@ -37,7 +37,7 @@ public class Main {
                 }
             }
             writer.close();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
     }
