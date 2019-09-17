@@ -7,9 +7,9 @@ class AnalysisConstants {
     static final String[] PUMA_CLASSES = new String[] {
             "AdjList",
             "Classification",
-            "Cluster",
-            "ClusterWritable",
-            "FileCountPair",
+//            "Cluster",
+//            "ClusterWritable",
+//            "FileCountPair",
             "HistogramMovies",
             "HistogramRatings",
             "InvertedIndex",
@@ -21,17 +21,17 @@ class AnalysisConstants {
             "WordCount"
     };
     static final String[] BROWN_CLASSES = new String[] {
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark1",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark2",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3A",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark4",
-            "brown.edu.brown.cs.mapreduce.benchmarks.CompositeKey",
-            "brown.edu.brown.cs.mapreduce.benchmarks.DummyJob",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Grep",
-            "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark2",
-            "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark3",
-            "brown.edu.brown.cs.mapreduce.benchmarks.Sort"
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark1",
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark2",
+//            "edu.brown.cs.mapreduce.benchmarks.Benchmark3",
+//            "edu.brown.cs.mapreduce.benchmarks.Benchmark3A",
+            "edu.brown.cs.mapreduce.benchmarks.Benchmark4",
+//            "edu.brown.cs.mapreduce.benchmarks.CompositeKey",
+            "edu.brown.cs.mapreduce.benchmarks.DummyJob",
+            "edu.brown.cs.mapreduce.benchmarks.Grep",
+            "edu.brown.cs.mapreduce.benchmarks.OrBenchmark2",
+//            "edu.brown.cs.mapreduce.benchmarks.OrBenchmark3",
+//            "edu.brown.cs.mapreduce.benchmarks.Sort"
     };
     static final String[] PIGMIX2_CLASSES = new String[] {
             "L1",
@@ -50,8 +50,8 @@ class AnalysisConstants {
             "L6",
             "L7",
             "L8",
-            "L9",
-            "Library"
+            "L9"
+//            "Library"
     };
     static final String[] PEGASUS_CLASSES = new String[] {
             // "pegasus.BitShuffleCoder",
@@ -60,19 +60,19 @@ class AnalysisConstants {
             "pegasus.ConCmptBlock",
             "pegasus.ConCmptIVGen",
             "pegasus.DegDist",
-            "pegasus.EdgeType",
-            "pegasus.FMBitmask",
-            "pegasus.GIMV",
+//            "pegasus.EdgeType",
+//            "pegasus.FMBitmask",
+//            "pegasus.GIMV",
             "pegasus.Hadi",
             "pegasus.HadiBlock",
             "pegasus.HadiIVGen",
-            "pegasus.HadiResultInfo",
-            "pegasus.HadiUtils",
+//            "pegasus.HadiResultInfo",
+//            "pegasus.HadiUtils",
             "pegasus.JoinTablePegasus",
             "pegasus.L1norm",
             "pegasus.L1normBlock",
-            "pegasus.MatvecUtils",
-            "pegasus.MinMaxInfo",
+//            "pegasus.MatvecUtils",
+//            "pegasus.MinMaxInfo",
             "pegasus.NormalizeVector",
             "pegasus.PagerankBlock",
             "pegasus.PagerankInitVector",
@@ -81,13 +81,13 @@ class AnalysisConstants {
             "pegasus.PegasusUtils",
             "pegasus.RWRBlock",
             "pegasus.RWRNaive",
-            "pegasus.ResultInfo",
+//            "pegasus.ResultInfo",
             "pegasus.Saxpy",
             "pegasus.SaxpyBlock",
             "pegasus.SaxpyTextoutput",
             "pegasus.ScalarMult",
-            "pegasus.VectorElem",
-            "pegasus.matvec"
+//            "pegasus.VectorElem",
+//            "pegasus.matvec"
     };
 
 
@@ -103,6 +103,8 @@ class AnalysisConstants {
 
     static final String ASSIGNMENTS_HEADER = "\tAssignments\n\t-------------------------------------------------\n";
     static final String IFSTMTS_HEADER = "\tIf Statements\n\t-------------------------------------------------\n";
+
+    static final String LOG_FOLDER = "Logs";
 
 }
 

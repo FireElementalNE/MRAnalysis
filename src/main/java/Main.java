@@ -7,6 +7,7 @@ import soot.jimple.IfStmt;
 import soot.options.Options;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,10 +19,10 @@ public class Main {
 
     private static void write_transforms(String benchmark, String problem, MRTransformer transformer) {
         String filename = String.format("%s_%s.log", benchmark, problem);
+        filename = AnalysisConstants.LOG_FOLDER + File.separator + filename;
         Path path = Paths.get(filename);
         try {
             BufferedWriter writer = Files.newBufferedWriter(path);
-
             ArrayList<MRVisitorData> vdata_lst = transformer.get_visitor_data();
             for (MRVisitorData vdata : vdata_lst) {
                 writer.write("Method: " + vdata.get_method().getName() + "\n");
@@ -42,13 +43,22 @@ public class Main {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
+        String log_path = System.getProperty("user.dir") + File.separator + AnalysisConstants.LOG_FOLDER;
+        File log_folder = new File(log_path);
+        boolean ret = true;
+        System.out.println();
+        if (Files.exists(Paths.get(log_path))) {
+            log_folder.delete();
+        }
+        log_folder.mkdir();
         // Options.v().set_exclude(AnalysisConstants.EXCLUDES);
-        String base_cp = "%s;" + AnalysisConstants.RT_DIR;
+        String base_cp = "%s" + File.pathSeparator + AnalysisConstants.RT_DIR;
         ArrayList<Benchmark> benchmarks = AnalysisUtils.get_benchmark_table();
-        ArrayList <String> nop_problems = new ArrayList<>();
-        for(Benchmark b : benchmarks) {
+        ArrayList<String> nop_problems = new ArrayList<>();
+        for (Benchmark b : benchmarks) {
             logWriter.write_out("Starting benchmark suite " + b.get_name());
             String[] program_lst = b.get_programs();
             String[] new_args = new String[args.length + 2];
@@ -66,7 +76,7 @@ public class Main {
                 MRTransformer transformer = new MRTransformer();
                 PackManager.v().getPack("jtp").add(new Transform("jtp.transformer", transformer));
                 soot.Main.main(new_args);
-                if(transformer.get_visitor_data().size() > 0 ) {
+                if (transformer.get_visitor_data().size() > 0) {
                     write_transforms(b.get_name(), program, transformer);
                 } else {
                     String problem_name = String.format("%s_%s", program, b.get_name());
@@ -81,10 +91,10 @@ public class Main {
             logWriter.write_out("Finished benchmark suite " + b.get_name());
         }
         String outputDir = SourceLocator.v().getOutputDir();
-        long endTime   = System.currentTimeMillis();
-        logWriter.write_out("INFO: Total running time: " + ((float)(endTime - startTime) / 1000) + " sec");
+        long endTime = System.currentTimeMillis();
+        logWriter.write_out("INFO: Total running time: " + ((float) (endTime - startTime) / 1000) + " sec");
         logWriter.write_out("The Following programs are NOPs:");
-        for(String s : nop_problems) {
+        for (String s : nop_problems) {
             logWriter.write_out(s);
         }
     }
