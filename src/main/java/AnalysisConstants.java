@@ -5,53 +5,53 @@ class AnalysisConstants {
     static final boolean DEBUG = true;
     private static final String[] EXCLUDES_INTERNAL = new String[] { "jdk.*" };
     static final String[] PUMA_CLASSES = new String[] {
-            // "AdjList",
-            // "Classification",
-            // "Cluster",
-            // "ClusterWritable",
-            // "FileCountPair",
-            // "HistogramMovies",
-            // "HistogramRatings",
-            // "InvertedIndex",
-            // "Kmeans",
-            // "RankedInvertedIndex",
-            // "SelfJoin",
-            // "SequenceCount",
-            // "TermVectorPerHost",
-            // "WordCount"
+            "AdjList",
+            "Classification",
+            "Cluster",
+            "ClusterWritable",
+            "FileCountPair",
+            "HistogramMovies",
+            "HistogramRatings",
+            "InvertedIndex",
+            "Kmeans",
+            "RankedInvertedIndex",
+            "SelfJoin",
+            "SequenceCount",
+            "TermVectorPerHost",
+            "WordCount"
     };
     static final String[] BROWN_CLASSES = new String[] {
-            // "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark1",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark2",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3A",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark4",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.CompositeKey",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.DummyJob",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.Grep",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark2",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark3",
-            // "brown.edu.brown.cs.mapreduce.benchmarks.Sort"
+            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark1",
+            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark2",
+            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3",
+            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark3A",
+            "brown.edu.brown.cs.mapreduce.benchmarks.Benchmark4",
+            "brown.edu.brown.cs.mapreduce.benchmarks.CompositeKey",
+            "brown.edu.brown.cs.mapreduce.benchmarks.DummyJob",
+            "brown.edu.brown.cs.mapreduce.benchmarks.Grep",
+            "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark2",
+            "brown.edu.brown.cs.mapreduce.benchmarks.OrBenchmark3",
+            "brown.edu.brown.cs.mapreduce.benchmarks.Sort"
     };
     static final String[] PIGMIX2_CLASSES = new String[] {
-            // "L1",
-            // "L10",
-            // "L11",
-            // "L12",
-            // "L13",
-            // "L14",
-            // "L15",
-            // "L16",
-            // "L17",
-            // "L2",
-            // "L3",
-            // "L4",
-            // "L5",
-            // "L6",
-            // "L7",
-            // "L8",
-            // "L9",
-            // "Library"
+            "L1",
+            "L10",
+            "L11",
+            "L12",
+            "L13",
+            "L14",
+            "L15",
+            "L16",
+            "L17",
+            "L2",
+            "L3",
+            "L4",
+            "L5",
+            "L6",
+            "L7",
+            "L8",
+            "L9",
+            "Library"
     };
     static final String[] PEGASUS_CLASSES = new String[] {
             // "pegasus.BitShuffleCoder",
@@ -99,6 +99,7 @@ class AnalysisConstants {
 
     static final ArrayList<String> EXCLUDES = new ArrayList<>(Arrays.asList(EXCLUDES_INTERNAL));
     static final String MATH_LIB = "java.lang.Math";
+    static final String STRING_LIB = "java.lang.String";
 
     static final String ASSIGNMENTS_HEADER = "\tAssignments\n\t-------------------------------------------------\n";
     static final String IFSTMTS_HEADER = "\tIf Statements\n\t-------------------------------------------------\n";

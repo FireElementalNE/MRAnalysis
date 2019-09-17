@@ -49,9 +49,23 @@ class AnalysisUtils {
             if (sm.getDeclaringClass().getName().equals(AnalysisConstants.MATH_LIB)) {
                 sb.append(" -----> ").append("Found Math Call: ").append(sm.getName());
             }
+            else if(sm.getDeclaringClass().getName().equals(AnalysisConstants.STRING_LIB)) {
+                sb.append(" -----> ").append("Found String Call: ").append(sm.getName());
+            }
             msg = sb.toString();
         } else if (value instanceof JVirtualInvokeExpr) {
+            StringBuilder sb = new StringBuilder();
             msg = "JVirtualInvokeExpr: " + value.toString();
+            sb.append("JVirtualInvokeExpr: ").append(value.toString());
+            JVirtualInvokeExpr virtualInvokeExpr = (JVirtualInvokeExpr) value;
+            SootMethod sm = virtualInvokeExpr.getMethod();
+            if (sm.getDeclaringClass().getName().equals(AnalysisConstants.MATH_LIB)) {
+                sb.append(" -----> ").append("Found Math Call: ").append(sm.getName());
+            }
+            else if(sm.getDeclaringClass().getName().equals(AnalysisConstants.STRING_LIB)) {
+                sb.append(" -----> ").append("Found String Call: ").append(sm.getName());
+            }
+            msg = sb.toString();
         } else {
             msg = "Unknown: " + value.toString();
         }
