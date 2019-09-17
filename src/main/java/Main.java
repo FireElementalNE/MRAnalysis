@@ -44,13 +44,10 @@ public class Main {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-
         // Options.v().set_exclude(AnalysisConstants.EXCLUDES);
-
         String base_cp = "%s;" + AnalysisConstants.RT_DIR;
-
         ArrayList<Benchmark> benchmarks = AnalysisUtils.get_benchmark_table();
-
+        ArrayList <String> nop_problems = new ArrayList<>();
         for(Benchmark b : benchmarks) {
             logWriter.write_out("Starting benchmark suite " + b.get_name());
             String[] program_lst = b.get_programs();
@@ -69,7 +66,13 @@ public class Main {
                 MRTransformer transformer = new MRTransformer();
                 PackManager.v().getPack("jtp").add(new Transform("jtp.transformer", transformer));
                 soot.Main.main(new_args);
-                write_transforms(b.get_name(), program, transformer);
+                if(transformer.get_visitor_data().size() > 0 ) {
+                    write_transforms(b.get_name(), program, transformer);
+                } else {
+                    String problem_name = String.format("%s_%s", program, b.get_name());
+                    logWriter.write_out(problem_name + " is a NOP!");
+                    nop_problems.add(problem_name);
+                }
                 logWriter.write_out("Finished " + program + " in suite " + b.get_name());
                 // static soot reset
                 G.v();
@@ -79,7 +82,11 @@ public class Main {
         }
         String outputDir = SourceLocator.v().getOutputDir();
         long endTime   = System.currentTimeMillis();
-        System.out.println("INFO: Total running time: " + ((float)(endTime - startTime) / 1000) + " sec");
+        logWriter.write_out("INFO: Total running time: " + ((float)(endTime - startTime) / 1000) + " sec");
+        logWriter.write_out("The Following programs are NOPs:");
+        for(String s : nop_problems) {
+            logWriter.write_out(s);
+        }
     }
 }
 
